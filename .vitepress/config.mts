@@ -18,7 +18,9 @@ export default defineConfig({
           text: 'Lua的底层实现',
           items: [
             { text: '字符串', link: '/lua/string-implementation' },
-            { text: '表', link: '/lua/table-implementation' }
+            { text: '表', link: '/lua/table-implementation' },
+            { text: '函数和闭包', link: '/lua/function-implementation' },
+            { text: '虚拟机', link: '/lua/virtual-machine' }
           ]
         }
       ]
@@ -26,7 +28,7 @@ export default defineConfig({
 
     outline: {
       label: '目录',
-      level: [2, 4]
+      level: [2, 3]
     },
 
     docFooter: {
