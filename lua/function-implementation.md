@@ -234,8 +234,157 @@ FunA()
     <img src="/function-impl-4.png">
 </center>
 
+#### 寄存器重用
+这里要分两个清醒来讨论。
+
+对于同一个Lua闭包中的寄存器的重用：Lua会为每一个闭包中的本地变量（包括闭包的形参）分配寄存器，然而一些本地变量可能在某次调用后就不再使用了（比如未使用的形参），此时不禁令人想到是否能将这些寄存器重用给其他本地变量？答案是Lua不会这么做，因为实现的简单性和高效。
+
+对于不同Lua闭包之间的寄存器重用：Lua在闭包内部调用另一个闭包时，会立刻将被调用闭包压入栈空间中，再依次压入传入的参数（如果有的话），此时被调用闭包和外部闭包实际上是在同一个栈空间上工作的，此时被调用闭包所使用的寄存器在物理位置上和外部闭包的寄存器位置是有重合的（例如被调用闭包的0号寄存器可能就是外部闭包的10号寄存器）。因为Lua给局部变量安排寄存器位置和函数体指令的先后有关，Lua会保证在内部调用闭包时，当前位置之后的寄存器是暂未开始使用的，被调用闭包在调用完成后会解开出自身所引用的栈空间位置的引用，外部闭包后续的指令就可以照常使用后续的寄存器了。
+
+#### 闭包返回时栈空间变化
+闭包在返回时，会将当前闭包从栈空间上释放，并且依照返回值顺序依次放入栈空间中，而这并不是对于每个返回值而言的，而是会根据外部调用的需要来决定。例如对于代码“**local a, b = FunA()**”，无论**FunA**将多少个返回值压入了栈空间中，最后都会只留下两个在栈空间上（返回值数量不够则会用nil填充）。如果外部闭包刚好使用了新的本地变量来保存返回值，那么返回值会刚好处于对应的寄存器位置。
+
+此时可以顺便再次回应同一个Lua闭包的局部变量为什么不会重用寄存器位置：这样会使得返回值的处理变得更麻烦。
+
 ### 上值(upvalue)
 上值（upvalue）是Lua闭包中一个重要的概念，它允许函数记住并访问其词法作用域之外的变量。上值可以看作是函数所依赖的外部变量，它们在函数闭包中保持其值，即使外部作用域已经不存在。
+
+#### 数据原型
+```c
+// [!code focus:7]
+// 在函数原型`Proto`中使用，用于描述所引用的upvalue信息
+typedef struct Upvaldesc {
+  TString *name; //upvalue的名称（用于调试信息）
+  lu_byte instack; //是在栈空间中吗
+  lu_byte idx;  // （在栈中或是外层函数的列表中的）索引
+  lu_byte kind; // 类型
+} Upvaldesc;
+
+// [!code focus:15]
+// Lua闭包中的上值
+typedef struct UpVal {
+  CommonHeader;
+  union {
+    TValue *p;  // 指向栈空间对应位置或直接指向对应的值
+    ptrdiff_t offset;  // 栈空间重新分配后被启用
+  } v;
+  union {
+    struct {  // 当上值处于 open 状态时
+      struct UpVal *next;  // 指向下一个节点
+      struct UpVal **previous; // 指向前一个节点
+    } open;
+    TValue value;  // 当上值处于 从 close 状态时，值存储在这里
+  } u;
+} UpVal;
+
+// [!code focus:2]
+// Lua线程（实际上是协程）
+struct lua_State {
+  CommonHeader;
+  lu_byte status;
+  lu_byte allowhook;
+  unsigned short nci;
+  StkIdRel top;
+  global_State *l_G;
+  CallInfo *ci;
+  StkIdRel stack_last;
+  StkIdRel stack;
+  // [!code focus:1]
+  UpVal *openupval; // 同一个线程中所有闭包的上值
+  StkIdRel tbclist;
+  GCObject *gclist;
+  struct lua_State *twups;
+  struct lua_longjmp *errorJmp;
+  CallInfo base_ci;
+  volatile lua_Hook hook;
+  ptrdiff_t errfunc;
+  l_uint32 nCcalls;
+  int oldpc;
+  int basehookcount;
+  int hookcount;
+  volatile l_signalT hookmask;
+};// [!code focus]
+```
+
+#### 上值的创建
+每个Lua闭包是由函数原型`Proto`创建而来，其中`Proto`会使用`Upvaldesc`来描述所引用的upvalue信息。在创建闭包时，就会根据其中的信息来创建上值，以填充上值列表`LClosure.upvals`。
+
+根据`Upvaldesc.instack`字段分为两种情况：
+- `Upvaldesc.instack`为真(非零)：表示该上值在外部闭包的栈空间中，`Upvaldesc.idx`此时表示在栈空间中的索引，但需要在`lua_State.openupval`链表中查找是否已存在相应的上值，如果存在则共用同一个上值，如果不存在则创建新的上值并加入`lua_State.openupval`链表。
+- `Upvaldesc.instack`为假(零)：表示该上值同时也是外部函数的上值，直接在外部闭包的上值列表对应下标处`Upvaldesc.idx`就可以找到。
+
+#### open & close
+既然上值是外部闭包所定义的局部变量，那么上值就会有两种状态：
+- 外部闭包还未调用结束，此时被其内部声明的闭包所引用的局部变量还未越出其作用域，此时这些对应的上值的状态被Lua定义为"open"，表示这些上值所引用的局部变量是可直接访问的。
+- 外部闭包已经调用结束，此时被其内部声明的闭包所引用的局部变量已经越出其作用域，此时这些对应的上值的状态被Lua定义为"closed"，表示这些上值所引用的局部变量已经不可直接访问，但它们仍然需要被保留，以维持引用了这些上值得闭包正常工作。
+
+考虑这段Lua代码:
+```lua
+function outer()
+  local x = 10  -- 外部函数的局部变量
+  local function inner()
+    x = x + 1 -- 内部闭包捕获 x
+  end
+  local function printer()
+    print(x)  -- 内部闭包捕获 x，并和inner共用同一个上值
+  end
+  -- 直到此时outer还没调用结束， x 还处于open状态
+  return inner, printer
+end
+local closure, printer = outer()  -- outer 返回后，调用结束，其内部定义的 x 作为内部闭包引用的上值已经处于closed状态 
+closure() -- 调用内部闭包，虽然 x 已经处于closed状态，但上值仍然需要访问
+printer() -- 调用内部闭包，输出 x 的值，此时 x 和 closure 是共用一个值的
+```
+
+当闭包 outer 还没调用结束时，其局部变量 x 还是个栈空间上的值，inner 和 printer 引用的是其在栈空间上的地址，且它们共用一个`UpVal`，如下图所示：
+
+<center>
+    <img src="/function-impl-5.png">
+</center>
+
+当闭包 outer 还没调用结束时，其局部变量 x 需要在从栈空间上释放，这时会将值 x 拷贝到`UpVal.u.value`中，其引用栈的指针也改为指向自身的value，最后还需要将从`lua_State.openupval`链表中移出，如下图所示：
+
+<center>
+    <img src="/function-impl-6.png">
+</center>
+
+#### 上值在Lua协程之间的共享争议
+在上文中，我们知道，同一个Lua协程中所有闭包的相同语义的上值是共享的，那么协程之间的情况呢？
+
+观察Lua代码：
+```lua
+local x = 0
+
+local co_a = coroutine.create(functon()
+  x = 10
+end)
+
+local co_b = coroutine.create(functon()
+  x = -10
+end)
+
+local co_c = coroutine.create(functon()
+  print(x)
+
+  local y = 0
+  local function inner()
+    y = 100
+  end
+  inner()
+end)
+
+coroutine.resume(co_a)
+print(x) -- 10
+
+coroutine.resume(co_b)
+print(x) -- -10
+
+x = 99
+coroutine.resume(co_c) -- 99
+```
+事实上以上代码会如预期一样工作，3个协程以及主协程会实时共享变量 x 的变化。
+
+这是在Lua内部实现中，创建闭包时会在当前协程的`openupval`链表中查找并共用上值，在上边的代码中，调用`coroutine.create`是传入的闭包是由主协程创建的，故而它们对变量 x 的引用都是共用链在主协程上的上值。也就是说 co_a 、co_b、co_c 这些协程的主函数其实是“属于”主协程的闭包，只有在其调用过程中创建的闭包所引用的上值才会链在这些协程本身的`openupval`中（例如上边的协程 co_c 中的变量 y）。
 
 ### 待关闭变量(to-closed)
 
