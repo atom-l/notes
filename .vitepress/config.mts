@@ -20,7 +20,8 @@ export default defineConfig({
             { text: '字符串', link: '/lua/string-implementation' },
             { text: '表', link: '/lua/table-implementation' },
             { text: '函数和闭包', link: '/lua/function-implementation' },
-            { text: '虚拟机', link: '/lua/virtual-machine' }
+            { text: '虚拟机', link: '/lua/virtual-machine' },
+            { text: 'GC', link: '/lua/gc' }
           ]
         }
       ]

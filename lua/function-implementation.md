@@ -187,7 +187,7 @@ struct lua_State { // [!code focus]
 ```lua
 function FunB()
   -- do something ...
-  refturn 1
+  return 1
 end
 
 function FunA(param1, param2, param3)
@@ -235,9 +235,9 @@ FunA()
 </center>
 
 #### 寄存器重用
-这里要分两个清醒来讨论。
+这里要分两个情况来讨论。
 
-对于同一个Lua闭包中的寄存器的重用：Lua会为每一个闭包中的本地变量（包括闭包的形参）分配寄存器，然而一些本地变量可能在某次调用后就不再使用了（比如未使用的形参），此时不禁令人想到是否能将这些寄存器重用给其他本地变量？答案是Lua不会这么做，因为实现的简单性和高效。
+对于同一个Lua闭包中的寄存器的重用：Lua会为每一个闭包中的本地变量（包括闭包的形参）分配寄存器，然而一些本地变量可能在某次调用后就不再使用了（比如未使用的形参），此时不禁令人想到是否能将这些寄存器重用给其他本地变量？答案是Lua不会这么做，因为实现的简单性和高效性。
 
 对于不同Lua闭包之间的寄存器重用：Lua在闭包内部调用另一个闭包时，会立刻将被调用闭包压入栈空间中，再依次压入传入的参数（如果有的话），此时被调用闭包和外部闭包实际上是在同一个栈空间上工作的，此时被调用闭包所使用的寄存器在物理位置上和外部闭包的寄存器位置是有重合的（例如被调用闭包的0号寄存器可能就是外部闭包的10号寄存器）。因为Lua给局部变量安排寄存器位置和函数体指令的先后有关，Lua会保证在内部调用闭包时，当前位置之后的寄存器是暂未开始使用的，被调用闭包在调用完成后会解开出自身所引用的栈空间位置的引用，外部闭包后续的指令就可以照常使用后续的寄存器了。
 
@@ -273,7 +273,7 @@ typedef struct UpVal {
       struct UpVal *next;  // 指向下一个节点
       struct UpVal **previous; // 指向前一个节点
     } open;
-    TValue value;  // 当上值处于 从 close 状态时，值存储在这里
+    TValue value;  // 当上值处于 closed 状态时，值存储在这里
   } u;
 } UpVal;
 
@@ -316,7 +316,7 @@ struct lua_State {
 #### open & close
 既然上值是外部闭包所定义的局部变量，那么上值就会有两种状态：
 - 外部闭包还未调用结束，此时被其内部声明的闭包所引用的局部变量还未越出其作用域，此时这些对应的上值的状态被Lua定义为"open"，表示这些上值所引用的局部变量是可直接访问的。
-- 外部闭包已经调用结束，此时被其内部声明的闭包所引用的局部变量已经越出其作用域，此时这些对应的上值的状态被Lua定义为"closed"，表示这些上值所引用的局部变量已经不可直接访问，但它们仍然需要被保留，以维持引用了这些上值得闭包正常工作。
+- 外部闭包已经调用结束，此时被其内部声明的闭包所引用的局部变量已经越出其作用域，此时这些对应的上值的状态被Lua定义为"closed"，表示这些上值所引用的局部变量已经不可直接访问，但它们仍然需要被保留，以维持引用了这些上值的闭包正常工作。
 
 考虑这段Lua代码:
 ```lua
@@ -342,7 +342,7 @@ printer() -- 调用内部闭包，输出 x 的值，此时 x 和 closure 是共�
     <img src="/function-impl-5.png">
 </center>
 
-当闭包 outer 还没调用结束时，其局部变量 x 需要在从栈空间上释放，这时会将值 x 拷贝到`UpVal.u.value`中，其引用栈的指针也改为指向自身的value，最后还需要将从`lua_State.openupval`链表中移出，如下图所示：
+当闭包 outer 还没调用结束时，其局部变量 x 需要从栈空间上释放，这时会将值 x 拷贝到`UpVal.u.value`中，其引用栈的指针也改为指向自身的value，最后还需要将其从`lua_State.openupval`链表中移出，如下图所示：
 
 <center>
     <img src="/function-impl-6.png">
@@ -355,15 +355,15 @@ printer() -- 调用内部闭包，输出 x 的值，此时 x 和 closure 是共�
 ```lua
 local x = 0
 
-local co_a = coroutine.create(functon()
+local co_a = coroutine.create(function()
   x = 10
 end)
 
-local co_b = coroutine.create(functon()
+local co_b = coroutine.create(function()
   x = -10
 end)
 
-local co_c = coroutine.create(functon()
+local co_c = coroutine.create(function()
   print(x)
 
   local y = 0
