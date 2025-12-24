@@ -1,4 +1,4 @@
-# Lua表的底层实现
+# Lua表的底层实现（Lua5.4）
 
 ## 结构原型
 
@@ -129,3 +129,40 @@ The length of tb is:    4
 > 当t是序列时，#t会返回其唯一的边界，这与序列长度的直观概念相对应。当t不是序列时，#t可能返回其任意一个边界。（具体返回哪一个取决于表的内部细节，而这又可能取决于表的填充方式以及非数字键的内存地址。）
 
 所以也不太好说它……是吧？:)
+
+## 数组内存布局优化（Lua5.5新增）
+首先是数据结构变化：
+```c
+typedef struct Table {
+  CommonHeader;
+  lu_byte flags;  /* 1<<p means tagmethod(p) is not present */
+  lu_byte lsizenode;  /* log2 of number of slots of 'node' array */
+  unsigned int asize;  /* number of slots in 'array' array */
+  // [!code --]
+  TValue *array;  /* array part */
+  // [!code ++]
+  Value *array;  /* array part */
+  Node *node;
+
+  struct Table *metatable;
+  GCObject *gclist;
+} Table;
+```
+`Table.array`部分不再使用`TValue`，而是使用`Value`。
+
+其中原本使用的`TValue`结构为：
+```c
+typedef struct TValue {
+  Value value_;
+  lu_byte tt_;
+} TValue;
+```
+其中`Value`大小为8字节，`lu_byte`大小为1字节，因为内存对齐的关系，`TValue`则占用16字节。实际会浪费了7个字节。
+
+在Lua5.5中，将value和tag分开连续存储，其中Value倒序存储，tag正序存储，两者相接仅隔开一个无符号整数。如图所示：
+
+<center>
+    <img src="/table-impl-1.png">
+</center>
+
+优化后的结构在使用大型数组的场景下，最多可节约60%的内存开销（指总开销，不止只是这里的优化带来的）。
