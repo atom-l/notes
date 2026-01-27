@@ -8,6 +8,9 @@ export default defineConfig({
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }]
   ],
+  markdown: {
+    math: true
+  },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     logo: '/favicon.svg',
@@ -22,6 +25,14 @@ export default defineConfig({
             { text: '函数和闭包', link: '/lua/function-implementation' },
             { text: '虚拟机', link: '/lua/virtual-machine' },
             { text: 'GC', link: '/lua/gc' }
+          ]
+        }
+      ],
+      '/linear-algebra/': [
+        {
+          text: '线性代数',
+          items: [
+            { text: '向量空间', link: '/linear-algebra/vector-spaces' }
           ]
         }
       ]
