@@ -5,6 +5,9 @@ layout: home
 hero:
   name: "Atom-L"
   text: "瞎话一箩筐"
+  image:
+    src: /favicon.svg
+    alt: Atom-L
 
 features:
   - title: <a href="lua/string-implementation">Lua的底层实现</a>
