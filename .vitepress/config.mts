@@ -61,7 +61,7 @@ export default defineConfig({
     ],
 
     footer: {
-      message: '基于 CC BY-NC 4.0 许可发布',
+      message: '本站页面由<a href="https://vitepress.dev/">VitePress</a>驱动，内容基于 <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a> 许可发布。',
       copyright: '版权所有 © Atom-L。本站内容永久受著作权保护，保留所有权利。'
     },
 
