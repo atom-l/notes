@@ -6,7 +6,7 @@ export default defineConfig({
   title: "Atom-L",
   description: "瞎话一箩筐",
   head: [
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }]
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/notes/favicon.svg' }]
   ],
   markdown: {
     math: true
