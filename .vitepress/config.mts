@@ -58,7 +58,16 @@ export default defineConfig({
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/atom-l/notes' }
-    ]
+    ],
+
+    footer: {
+      message: '基于 CC BY-NC 4.0 许可发布',
+      copyright: '版权所有 © Atom-L。本站内容永久受著作权保护，保留所有权利。'
+    },
+
+    search: {
+      provider: 'local'
+    }
   },
   base: '/notes/'
 })
