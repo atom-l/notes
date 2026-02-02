@@ -14,7 +14,7 @@
 - **结合性（associativity）**：对于所有的 $u,v,w \in V$ 和 $a,b \in \mathbf{F}$；
 - **加法单位元（additive identity）**：存在元素 $0 \in V$ 使得对所有 $v \in V$ 都有 $v + 0 = v$；
 - **加法逆元（additive inverse）**：对每个 $v \in V$ 都存在 $w \in V$ 使得 $v + w = 0$；
-- **标量乘法单位元（scalar multiplicative identity）**：对于所有 $v \in V$ 都有 $1v = v$，这里的 $1 \in \mathbf{F}$；(原书中只是简单称之为“乘法单位元（multiplicative identity）”，容易引起歧义，我这里使用更准确的描述)
+- **标量乘法单位元（scalar multiplicative identity）**：对于所有 $v \in V$ 都有 $1v = v$，这里的 $1 \in \mathbf{F}$；(教科书中只是简单称之为“乘法单位元（multiplicative identity）”，容易引起歧义，这里我使用更准确的描述)
 - **分配律（distributive properties）**：对于所有 $a,b \in \mathbf{F}$ 和 $u,v \in V$ 都有 $a(u+v) = au + av$ 和 $(a + b)v = av + bv$；
 
 这里延伸出来几个向量空间的性质：
