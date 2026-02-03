@@ -11,7 +11,7 @@
 ## 定义及性质
 向量空间的定义如下：
 - **交换性（commutativity）**：对于所有的 $u,v \in V$ 都有 $u + v = v + u$；
-- **结合性（associativity）**：对于所有的 $u,v,w \in V$ 和 $a,b \in \mathbf{F}$；
+- **结合性（associativity）**：对于所有的 $u,v,w \in V$ 和 $a,b \in \mathbf{F}$ ， 都有 $(u + v) + w = u + (v + w)$ 和 $(ab)v = a(bv)$ ；
 - **加法单位元（additive identity）**：存在元素 $0 \in V$ 使得对所有 $v \in V$ 都有 $v + 0 = v$；
 - **加法逆元（additive inverse）**：对每个 $v \in V$ 都存在 $w \in V$ 使得 $v + w = 0$；
 - **标量乘法单位元（scalar multiplicative identity）**：对于所有 $v \in V$ 都有 $1v = v$，这里的 $1 \in \mathbf{F}$；(教科书中只是简单称之为“乘法单位元（multiplicative identity）”，容易引起歧义，这里我使用更准确的描述)

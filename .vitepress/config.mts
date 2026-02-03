@@ -33,7 +33,8 @@ export default defineConfig({
           text: '线性代数',
           items: [
             { text: '向量空间', link: '/linear-algebra/vector-spaces' },
-            { text: '有限维向量空间', link: '/linear-algebra/finite-dimensional-vector-spaces' }
+            { text: '有限维向量空间', link: '/linear-algebra/finite-dimensional-vector-spaces' },
+            { text: '线性映射', link: '/linear-algebra/linear-map.md' }
           ]
         }
       ]
