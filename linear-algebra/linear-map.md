@@ -95,7 +95,7 @@ $$
 4. 现在开始证明唯一性，设 $T \in \mathcal{L}(V, W)$ ，且 $T{v_j} = w_j , j = 1, ..., n$ ；
 设 $c_1, c_2, ..., c_n \in \mathbf{F}$。由于$T$的齐性，$T({c_j}{v_j}) = {c_j}{w_j}, j = 1, 2, ..., n$。又因为其可加性：
 $$T({c_1}{v_1} + ... + {c_n}{v_n}) = {c_1}{w_1} + ... + {c_n}{w_n}$$
-上式其实等价于 $span(v_1, v_2, ..., v_n)$ ，并且上式是唯一确定的（式子右侧全是确定的标量和向量），又由于 $v_1, v_2, ..., v_n$ 是 $V$ 的基，所以 $span(v_1, v_2, ..., v_n) = V$ ，所以 $T$ 在 $V$ 上也是唯一确定的。
+上式其实等价于 $\text{span}(v_1, v_2, ..., v_n)$ ，并且上式是唯一确定的（式子右侧全是确定的标量和向量），又由于 $v_1, v_2, ..., v_n$ 是 $V$ 的基，所以 $\text{span}(v_1, v_2, ..., v_n) = V$ ，所以 $T$ 在 $V$ 上也是唯一确定的。
 
 ### $\mathcal{L}(V,W)$ 上的代数运算
 
@@ -131,3 +131,144 @@ $$({S_1} + {S_2})T = {S_1}T + {S_2}T {\ },{\ }S({T_1} + {T_2}) = S{T_1} + S{T_2}
 
 其证明过程十分简单，利用线性映射的可加性即可：
 $$T(0) = T(0+0) = T(0) + T(0) \Rightarrow T(0) = 0$$
+
+## 零空间、值域
+
+### 零空间（null space）
+定义：
+对于某个 $T \in \mathcal{L}(V, W)$ ，$T$ 的**零空间**记为 $\text{null}{\,}T$ ，它是 $V$ 中被 $T$ 映射为0的向量集合：
+$$\text{null}{\,}T = \{v \in V : Tv = 0 \}$$
+
+对于任意 $u, v \in \text{null}{\ }T$ 和 $\lambda \in \mathbf{F}$ ，根据零空间的定义，我们可以简单得到零空间中任意向量之和与标量乘法的结果：
+$$T(u + v) = T(u) + T(v) = 0 \Rightarrow u + v \in \text{null}{\,}T$$
+$$T({\lambda}u) = {\lambda}T(u) = {\lambda}0 = 0 \Rightarrow {\lambda}u \in \text{null}{\,}T$$
+所以，**零空间是子空间**。
+
+### 值域
+定义：
+对于某个 $T \in \mathcal{L}(V, W)$ ， $T$ 的**值域**记为 $\text{range}{\,}T$ ，它是在 $W$ 中由 $v$ 的向量经 $T$ 映射而来的向量集合：
+$$\text{range}{\,}T = {Tv : v \in V}$$
+
+对于任意 $v_1, v_2 \in \text{range}{\,}T$ 和 $\lambda \in \mathbf{F}$ ，且设 $w_1 = T{v_1}$ 和 $w_2 = T{v_2}$ ， 根据值域的定义，我们同样可以得到：
+$$T(v_1 + v_2) = T{v_1} + T{v_2} = w_1 + w_2 \Rightarrow w_1 + w_2 \in \text{range}{\,}T$$
+$$T({\lambda}v_1) = {\lambda}T{v_1} = {\lambda}w_1 \Rightarrow {\lambda}w_1 \in \text{range}{\,}T$$
+所以，**值域是子空间**。
+
+### 单射（injective）
+定义：
+如果某个 $T : V \to W$ , 对于任意 $v_1, v_2 \in V$ ，当 $T{v_1} = T{v_2}$ 只在 $v_1 = v_2$ 的情况下才成立时，则称 $T$ 是**单射**的。
+
+结合零空间的概念，我们可以得到结论：
+- **对于线性映射，单射性等同于零空间为 $\{0\}$**
+
+证明过程如下：
+1. 若 $T$ 是单射的线性映射，那么 $T(0) = 0$ ，即$\{0\} \subset \text{null}{\,}T$ ，设 $v \in \text{null}{\,}T$ ，则：
+$$
+\begin{align}
+& T(v) = 0 = T(0) \\
+& \Rightarrow v = 0 \\
+& \Rightarrow \text{null}{\,}T = \{0\} \\
+\end{align}
+$$
+2. 若 $\text{null}{\,}T = \{0\}$ ，设 $v_1, v_2 \in V \land T{v_1} = T{v_2}$ ， 则：
+$$
+\begin{align}
+& 0 = T{v_1} -T{v_2} = T(v_1 - v_2) \\
+& \Rightarrow T(v_1 - v_2) \in \text{null}{\,}T \\
+& \Rightarrow v_1 - v_2 \in \{0\} \\
+& \Rightarrow v_1 - v_2 = 0 \\
+& \Rightarrow v_1 = v_2 \\
+\end{align}
+$$
+
+### 满射（surjective）
+定义：
+如果某个 $T : V \to W$ 的值域完全等于 $W$ ，则称 $T$ 是**满射**的。
+
+## 线性映射基本定理
+定理：
+- 若向量空间 $V$ 是有限维的，且有 $T \in \mathcal{L}(V, W)$ ，则 $\text{range}{\,}T$ 也是有限维的 ，并且：
+$$\text{dim}V = \text{dim}{\,}\text{null}{\,}T + \text{dim}{\,}\text{range}{\,}T$$
+该定理揭示了线性映射的定义域与值域维数的数量关系。
+
+**证明过程如下：**
+
+设 $u_1, u_2, ..., u_m$ 为 $\text{null}{\,}T$ 的基，即 $\text{dim}{\,}\text{null}{\,}T = m$ ；
+
+因为 $u_1, u_2, ..., u_m$ 作为基必然是个线性无关组，那么它就可以用 $V$ 中的一组向量扩充为 $V$ 的基 $\{u_1, u_2, ..., u_m, v_1, v_2, ..., v_n\}$ ，即设 $\text{dim}{\,}V = m + n$ ；
+
+所以我们需要证明 $\text{dim}{\,}\text{range}{\,}T = n$ ，即只要证明 $\{T{v_1}, T{v_2}, ..., T{v_n}\}$ 是 $\text{range}{\,}T$ 的基。
+
+(1) 先证明 $\text{span}(T{v_1}, T{v_2}, ..., T{v_n}) = \text{range}{\,}T$ ：
+
+设 $v \in V$ ，$a_1, a_2, ... a_m, b_1, b_2, ... b_n \in \mathbf{F}$ ，因为 $\{u_1, u_2, ..., u_m, v_1, v_2, ..., v_n\}$ 是 $V$ 的基，所以：
+$$v = {a_1}{u_1} + {a_2}{u_2} + ... + {a_m}{u_m} + {b_1}{v_1} + {b_2}{v_2} + ... + {b_n}{v_n}$$
+
+那么：
+$$
+\begin{align}
+Tv &= T({a_1}{u_1} + {a_2}{u_2} + ... + {a_m}{u_m} + {b_1}{v_1} + {b_2}{v_2} + ... + {b_n}{v_n}) \\
+&= T({a_1}{u_1}) + T({a_2}{u_2}) + ... + T({a_m}{u_m}) + T({b_1}{v_1}) + T({b_2}{v_2}) + ... + T({b_n}{v_n}) \\
+&= {a_1}T{u_1} + {a_2}T{u_2} + ... + {a_m}T{u_m} + {b_1}T{v_1} + {b_2}T{v_2} + ... + {b_n}T{v_n} \\
+\end{align}
+$$
+
+又因为 $u_1, u_2, ..., u_m$ 是 $\text{null}{\,}T$ 的基，所以 $T{u_1} = T{u_2} = ... = T{u_m} = 0$ ，则：
+
+$$Tv = {b_1}T{v_1} + {b_2}T{v_2} + ... + {b_n}T{v_n}$$
+$$ \Rightarrow \text{span}(T{v_1}, T{v_2}, ..., T{v_n}) = \text{range}{\,}T$$
+
+(2) 接下来要证明 $T{v_1}, T{v_2}, ..., T{v_n}$ 线性无关：
+
+设 $c_1, c_2, ..., c_n \in \mathbf{F}$ ，并且：
+$${c_1}T{v_1} + {c_2}T{v_2} + ... + {c_3}T{v_n} = 0$$
+
+因为线性映射的性质，那么：
+$$T({c_1}{v_1} + {c_2}{v_2} + ... + {c_3}{v_n}) = 0$$
+
+所以：
+$${c_1}{v_1} + {c_2}{v_2} + ... + {c_3}{v_n} \in \text{null}{\,}T$$
+
+设 $d_1, d_2, ..., d_m \in \mathbf{F}$ ，由于 $u_1, u_2, ..., u_m$ 必然张成 $\text{null}{\,}T$ ，所以：
+$${c_1}{v_1} + {c_2}{v_2} + ... + {c_3}{v_n} = {d_1}{u_1} + {d_2}{u_2} + ... + {d_3}{u_m}$$
+
+又因为 $\{u_1, u_2, ..., u_m, v_1, v_2, ..., v_n\}$ 是 $V$ 的基，它们必然线性无关，所以它们只能等于0，并且 $c_1 = c_2 = ... = c_n = 0$ , 所以 $T{v_1}, T{v_2}, ..., T{v_n}$ 是线性无关的。
+
+$\{T{v_1}, T{v_2}, ..., T{v_n}\}$ 张成 $\text{range}{\,}T$ ，又是个线性无关组，所以它就是 $\text{range}{\,}T$ 的基。故而 $\text{dim}{\,}\text{range}{\,}T = n$ 。
+
+有了线性映射基本定理，我们就能够引申出以下两条性质。
+
+### 定义域维数大于值域维数的线性映射不是单射的
+**证明** 设 $T \in \mathcal{L}(V, W)$，则：
+$$
+\begin{align}
+\text{dim}{\,}\text{null}{\,}T &= \text{dim}{\,}V - \text{dim}{\,}\text{range}{\,}T \\
+&\ge \text{dim}{\,}V - \text{dim}{\,}W \\
+&> 0
+\end{align}
+$$
+
+所以 $\text{null}{\,}T$ 必然包括非零向量，而其中的向量都会被映射为0，因此 $T$ 不会是单射的。
+
+### 定义域维数小于值域维数的线性映射不会是满射的
+**证明** 设 $T \in \mathcal{L}(V, W)$，则：
+$$
+\begin{align}
+\text{dim}{\,}\text{range}{\,}T &= \text{dim}{\,}V - \text{dim}{\,}\text{null}{\,}T \\
+&\le \text{dim}{\,}V\\
+&< \text{dim}{\,}W\
+\end{align}
+$$
+
+这表示 $\text{range}{\,}T \ne W$ , 因此 $T$ 不会是满射的。
+
+### 在方程组上的应用性质
+对于方程组，假如设其变量为 $n$ 个，方程数量为 $m$ 个，那么可以看作是 $\mathbf{F}^n \to mathbf{F}^m$ 的线性映射，命名为 $T$ 。结合以上的两条性质，那么我们就可以得到以下结论：
+
+- 对于齐次线性方程组，当变量多于方程数量时，齐次线性方程组必然有解。
+
+这种情况下，问题可以转换成 $\text{null}{\,}T$ 是否等于 $\{0\}$ ，当变量多于方程数量可以看作此时 $n > m$ ，即定义域维数大于值域维数，所以 $\text{dim}{\,}\text{null}{\,}T > 0 \Rightarrow \text{null}{\,}T \ne \{0\}$。
+
+- 对于非齐次线性方程组，当变量多于方程数量时，必然有一组常数项使得方程无解。
+
+这种情况下，问题可以转换成 $T$ 是否为满射，当变量少于方程数量可以看作此时 $n < m$ ，即定义域维数小于值域维数。
