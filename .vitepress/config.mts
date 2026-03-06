@@ -34,7 +34,11 @@ export default defineConfig({
           items: [
             { text: '向量空间', link: '/linear-algebra/vector-spaces' },
             { text: '有限维向量空间', link: '/linear-algebra/finite-dimensional-vector-spaces' },
-            { text: '线性映射', link: '/linear-algebra/linear-map.md' }
+            { text: '线性映射', link: '/linear-algebra/linear-map.md' },
+            { text: '零空间与值域', link: '/linear-algebra/null-sapce' },
+            { text: '线性映射基本定理', link: '/linear-algebra/fundamental-theorem-linear-maps' },
+            { text: '矩阵', link: '/linear-algebra/matrix' },
+            { text: '可逆性与同构', link: '/linear-algebra/inverse-isomorphic' }
           ]
         }
       ]
