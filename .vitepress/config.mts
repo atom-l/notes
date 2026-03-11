@@ -39,7 +39,8 @@ export default defineConfig({
             { text: '线性映射基本定理', link: '/linear-algebra/fundamental-theorem-linear-maps' },
             { text: '矩阵', link: '/linear-algebra/matrix' },
             { text: '可逆性与同构', link: '/linear-algebra/inverse-isomorphic' },
-            { text: '向量空间的积和商', link: '/linear-algebra/product-quotient' }
+            { text: '向量空间的积和商', link: '/linear-algebra/product-quotient' },
+            { text: '对偶', link: '/linear-algebra/duality' }
           ]
         }
       ]

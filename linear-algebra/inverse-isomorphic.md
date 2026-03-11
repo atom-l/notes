@@ -47,10 +47,15 @@ $$
 
 - 设 $w_1, w_2 \in W$，且 $T{w_1} = v_1 , T{w_2} = v_2$则：
 $$
-\begin{gather}
-T(S{w_1} + S{w_2}) = T(v_1, v_2) = T(v_1) + T(v_2) = w_1 + w_2 = I(w_1 + w_2) = TS(w_1 + w_2) \\
-\Rightarrow S{w_1} + S{w_2} = S(w_1 + w_2)
-\end{gather}
+\begin{align}
+T(S{w_1} + S{w_2}) &= T(v_1, v_2) \\
+&= T(v_1) + T(v_2) \\
+&= w_1 + w_2 \\
+&= I(w_1 + w_2) \\
+&= TS(w_1 + w_2) \\
+&\Downarrow \\
+S{w_1} + S{w_2} &= S(w_1 + w_2)
+\end{align}
 $$
 
 因此 $S$ 满足可加性。
