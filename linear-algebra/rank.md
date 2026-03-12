@@ -15,10 +15,10 @@ $$\text{dim} \, \text{range} \, T = \text{dim} \, \mathcal{M}(T)$$
 若矩阵 $A \in \mathbf{F}^{m,n}$ ，定义 $T : \mathbf{F}^{n,1} \to \mathbf{F}^{n,1}$ 为 $Tx = Ax$ ，那么 $\mathcal{M}(T) = A$ ，那么：
 $$
 \begin{align}
-\text{column rank}(A) &= \text{coluumn rank}(\mathcal{M}(T)) \\
+\text{column rank}(A) &= \text{couumn rank}(\mathcal{M}(T)) \\
 &= \text{dim} \, \text{range} \, T \\
 &= \text{dim} \, \text{range} \, T' \\
-&= \text{coluumn rank}(\mathcal{M}(T')) \\
+&= \text{column rank}(\mathcal{M}(T')) \\
 &= \text{column rank}(A^t) \\
 &= \text{row rank}(A)
 \end{align}

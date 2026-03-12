@@ -44,6 +44,16 @@ export default defineConfig({
             { text: '矩阵的秩', link: '/linear-algebra/rank' }
           ]
         }
+      ],
+      '/base-algebra/': [
+        {
+          text: '代数基础',
+          items: [
+            { text: '复数', link: '/base-algebra/complex-number' },
+            { text: '组', link: '/base-algebra/list' },
+            { text: '多项式', link: '/base-algebra/polynomial' }
+          ]
+        }
       ]
     },
 
