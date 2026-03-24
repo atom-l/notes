@@ -75,6 +75,8 @@ $$\alpha / \beta = \alpha \cdot (1/\beta)$$
 $$\overline{z} = \text{Re} \, z - (\text{Im} \, z)\text{i}$$
 - $z$ 的**绝对值**（absolute value）记作 $\lvert z \rvert$ ，定义为：
 $$\lvert z \rvert = \sqrt{(\text{Re} \, z)^2 + (\text{Im} \, z)^2}$$
+故而对于任意 $z \in \mathbf{C}$ 都有：
+$$\lvert z \rvert \in \mathbf{R} \, \land \, \lvert z \rvert \geq 0$$
 
 ### 相关性质
 设 $w, z \in \mathbf{C}$ ：
