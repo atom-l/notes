@@ -16,7 +16,7 @@ $$
 {\varphi}_j(v_k) = 
 \begin{cases}
 1, \quad 若 k = j, \\
-2, \quad 若 k \neq j. 
+0, \quad 若 k \neq j. 
 \end{cases}
 $$
 
