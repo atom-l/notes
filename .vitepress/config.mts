@@ -41,7 +41,8 @@ export default defineConfig({
             { text: '可逆性与同构', link: '/linear-algebra/inverse-isomorphic' },
             { text: '向量空间的积和商', link: '/linear-algebra/product-quotient' },
             { text: '对偶', link: '/linear-algebra/duality' },
-            { text: '矩阵的秩', link: '/linear-algebra/rank' }
+            { text: '矩阵的秩', link: '/linear-algebra/rank' },
+            { text: '不变子空间', link: '/linear-algebra/invariant-subspace' }
           ]
         }
       ],
