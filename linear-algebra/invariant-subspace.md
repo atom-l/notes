@@ -56,3 +56,19 @@ $$
 将第一个等式乘以 ${\lambda}_k$ 后再与第二个等式相减可得：
 $$0 = a_1 ({\lambda}_k - {\lambda}_1) v_1 , \dots , a_{k-1} ({\lambda}_k - {\lambda}_{k-1}) v_{k-1}$$
 
+因为每个 $\lambda$ 不相等，且 $v_1, \dots , v_{k-1}$ 又是非零向量，所以只能是 $a_1, \dots , a_{k-1}$ 全为零，但如果反代回第一个等式，会使得 $v_k = 0$ ，此时会与本征向量的定义相悖，故而 $v_1 , \dots , v_m$ 线性相关的假设不成立。
+
+### 本征值的个数
+由不同本征值对应的本征向量线性无关的结论易得结论：
+
+设 $V$ 是有限维向量空间，那么 $V$ 上的每个算子最多有 $\text{dim} \, V$ 个不同的本征值。
+
+## 限制算子和商算子
+设 $T \in \mathcal{L}(V)$ , 且 $U$ 是 $V$ 的在 $T$ 下的不变子空间。
+- **限制算子**（restriction operator） $T \mid _U \in \mathcal{L}(U)$ 的定义为：
+$$T \mid _U(u) = Tu$$
+此处 $u \in U$ 。
+
+- **商算子**（quotien operator） $T/U \in \mathcal{L}(V/U)$ 的定义为：
+$$(T/U)(v + U) = Tv + U$$
+此处 $v \in V$ 。
