@@ -72,3 +72,71 @@ $$T \mid _U(u) = Tu$$
 - **商算子**（quotien operator） $T/U \in \mathcal{L}(V/U)$ 的定义为：
 $$(T/U)(v + U) = Tv + U$$
 此处 $v \in V$ 。
+
+## 算子代入多项式
+
+### 算子的幂
+设 $T \in \mathcal{L}(V)$ ，且 $m$ 是正整数，那么：
+- 定义 $T^m$ 为 $m$ 个 $T$ 相乘的结果，即 $T^m = \underbrace{T \dots T}_{m \text{个}}$ ;
+- 定义 $T^0$ 为 $V$ 上的恒等算子 $I$ ；
+- 若 $T$ 可逆，则定义 $T^{-m}$ 为其逆的 $m$ 次幂，即 $T^{-m} = (T^{-1})^m$ ；
+
+### 多项式算子
+设 $T \in \mathcal{L}(V)$ ，$p \in \mathcal{P}(\mathbf{F})$ ，对任意 $z \in \mathbf{F}$ 都有 $p(z) = a_0 + a_1 z + a_2 z^2+ \dots + a_m z^m$ ，则 $p(T)$ 是定义为 $p(T) = a_0 I + a_1 T + a_2 T^2 + \dots + a_m T^m$ 的算子。
+
+此外，还有两个关于多项式乘积算子的性质，设 $p,q \in \mathcal{P}(\mathbf{F})$ ，对于任意算子 $T \in \mathcal{L}(V)$ 都有：
+- $(pq)(T) = p(T)q(T)$ ；
+- $p(T)q(T) = q(T)p(T)$ ；
+
+证明：
+
+首先我们证明第一条性质， 设对于任意 $z \in \mathbf{F}$ 有 $p(z) = \sum_{j=0}^{m} a_j z^j$ ， $q(z) = \sum_{k=0}^{n} b_k z^k$ ，那么：
+$$(pq)(z) = \sum_{j=0}^{m} \sum_{k=0}^{n} a_j b_k z^{j+k}$$
+
+那么扩展代入到算子中，则：
+$$
+\begin{align}
+(pq)(T) &= \sum_{j=0}^{m} \sum_{k=0}^{n} a_j b_k T^{j+k} \\
+&= (\sum_{j=0}^{m} a_j T^j)(\sum_{k=0}^{n} b_k T^k) \\
+&= p(T)q(T)
+\end{align}
+$$
+
+故而第一条性质成立。
+
+根据第一条性质，我们可以直接推算出第二条性质：
+$$
+p(T)q(T) = (pq)(T) = (qp)(T) = q(T)p(T)
+$$
+
+### 本征值的存在性
+定理：**任意有限维非零复向量空间上的所有算子都有其对应的本征值。**
+
+证明：设 $\text{dim} \, V = n$ 且 $n > 0$ ，取一个非零向量 $v \in V$ ，因为有限维向量空间不同的本征值数量不超过维数，那么长度为 $n+1$ 的向量组 $v, Tv, T^2 v, \dots , T^n v$ 必然是线性相关的，于是必然有 $n+1$ 个不全为 $0$ 的实数组使得：
+$$0 = a_0 v + a_1 Tv + \dots + a_n T^n v$$
+
+结合代数学基本定理，上式可以分解成多个一次因式乘积的形式：
+$$
+\begin{align}
+0 &= a_0 v + a_1 T v + \dots + a_n T^n v \\
+&= (a_0 + a_1 T + \dots + a_n T^n) v \\
+&= c(T - {\lambda}_1 I) \dots (T - {\lambda}_m I)v \\
+\end{align}
+$$
+
+此处 $c, {\lambda}_1, \dots , {\lambda}_m \in \mathbf{C}$ 。
+
+上式说明，必然有一项 $(T - \lambda I)v$ 等于 $0$ ，设该等式成立的 $\lambda$ 的下标是 $k$ ，那么：
+$$
+\begin{align}
+(T - {\lambda}_k I) &v = 0 \\
+& \Downarrow \\
+Tv - {\lambda}_k I &v = 0 \\
+& \Downarrow \\
+Tv &= {\lambda}_k I v \\
+& \Downarrow \\
+Tv &= {\lambda}_k v \\
+\end{align}
+$$
+
+即 $T$ 必然存在本征值。
