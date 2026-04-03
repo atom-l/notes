@@ -104,3 +104,31 @@ $$
 
 ## 上三角矩阵与本征值
 若 $T \in \mathcal{L}(V)$ 关于 $V$ 上的某个基有上三角矩阵，那么该矩阵的每个对角线元素都是 $T$ 的本征值。
+
+证明：
+
+设 $v_1, \dots, v_n$ 是 $V$ 的基，并且 $T$ 关于该基有上三角矩阵：
+$$
+\mathcal{M}(T) =
+\left(
+\begin{array}{ccc}
+{\lambda}_1 & & * \\
+& \ddots & \\
+0 & & {\lambda}_n \\
+\end{array}
+\right)
+$$
+
+设 $\lambda \in \mathbf{F}$ ，则有：
+$$
+\mathcal{M}(T - \lambda I) =
+\left(
+\begin{array}{ccc}
+{\lambda}_1 - \lambda & & * \\
+& \ddots & \\
+0 & & {\lambda}_n  - \lambda  \\
+\end{array}
+\right)
+$$
+
+显然，当存在非零向量 $v_e \in V$ 能使得 $(T - \lambda I)v_e = 0$ 情况下，$T$ 有本征值，这种情况的存在说明 $T$ 不满足单射性（零空间非零），因为算子的单射性和可逆性等价成立，根据上三角矩阵与可逆性的关系，$\mathcal{M}(T - \lambda I)$ 任意对角线元素为 $0$ 时即可，那么$\lambda$ 作为本征值的取值情况就是 $\lambda = {\lambda}_1 \text{或} \dots \text{或} \lambda = {\lambda}_n$ ，证明完毕。
