@@ -46,7 +46,8 @@ export default defineConfig({
             { text: '上三角矩阵', link: '/linear-algebra/upper-triangular-matrix' },
             { text: '对角矩阵', link: '/linear-algebra/diagonal-matrix' },
             { text: ' 内积与范数', link: '/linear-algebra/inner-product' },
-            { text: ' 规范正交基', link: '/linear-algebra/orthonormal' }
+            { text: ' 规范正交基', link: '/linear-algebra/orthonormal' },
+            { text: ' 正交补', link: '/linear-algebra/orthogonal-complement' }
           ]
         }
       ],
