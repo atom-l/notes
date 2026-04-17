@@ -219,3 +219,50 @@ $$
 &= 2(\lVert u \rVert ^2 + \lVert v \rVert ^2) \\
 \end{align}
 $$
+
+### 极化恒等式
+> 范数是基于内积的定义而来，极化恒等式（polarization identity）使得内积可以用范数来表示，是一个必须了解的重要结论。
+
+设 $V$ 是复内积空间，对于任意 $x, y \in V$ 均有
+$$\langle x, y \rangle = \frac{\lVert x + y \rVert ^2 - \lVert x - y \rVert ^2 + i \lVert x + iy \rVert ^2 - i\lVert x - iy \rVert ^2}{4}$$
+
+证明：首先，我们先展开等式右边分子的四个项
+$$
+\begin{align}
+\lVert x + y \rVert^2 &= \langle x + y, x + y \rangle = \langle x, x \rangle + \langle x, y \rangle + \langle y, x \rangle + \langle y, y \rangle \\
+\lVert x - y \rVert^2 &= \langle x - y, x - y \rangle = \langle x, x \rangle - \langle x, y \rangle - \langle y, x \rangle + \langle y, y \rangle \\
+\lVert x + iy \rVert^2 &= \langle x + iy, x + iy \rangle = \langle x, x \rangle + \langle x, iy \rangle + \langle iy, x \rangle + \langle y, y \rangle \\
+\lVert x - iy \rVert^2 &= \langle x - iy, x - iy \rangle = \langle x, x \rangle - \langle x, iy \rangle - \langle iy, x \rangle + \langle y, y \rangle \\
+\end{align} 
+$$
+
+分别将第一个等式减去第二个等式、第三个等式减去第四个等式
+$$
+\begin{align}
+\lVert x + y \rVert^2 - \lVert x - y \rVert^2 &= 2 \cdot \langle x, y \rangle + 2 \cdot \langle y, x \rangle \\
+&= 2 \cdot (\langle x, y \rangle + \overline{\langle y, x \rangle}) \\
+&= 4 \cdot \text{Re} \, \langle x, y \rangle \\
+\\
+\lVert x + iy \rVert^2 - \lVert x - iy \rVert^2 &= 2 \cdot \langle x, iy \rangle + 2 \cdot \langle iy, x \rangle \\
+&= -2i \cdot \langle x, y \rangle + 2 i\cdot \langle y, x \rangle \\
+&= -2i(\langle x, y \rangle - \overline{\langle y, x \rangle}) \\
+&= -4i \cdot \text{Im} \, \langle x, y \rangle \\
+\end{align} 
+$$
+
+最终得证
+$$
+\begin{align}
+&\, \frac{\lVert x + y \rVert ^2 - \lVert x - y \rVert ^2 + i \lVert x + iy \rVert ^2 - i\lVert x - iy \rVert ^2}{4} \\
+&= \frac{(\lVert x + y \rVert ^2 - \lVert x - y \rVert ^2) + i (\lVert x + iy \rVert ^2 - \lVert x - iy \rVert ^2)}{4} \\
+&= \frac{4 \cdot \text{Re} \, \langle x, y \rangle + i \cdot (-4i \cdot \text{Im} \, \langle x, y \rangle)}{4} \\
+&= \frac{4 \cdot (\text{Re} \, \langle x, y \rangle + \text{Im} \, \langle x, y \rangle)}{4} \\
+&= \frac{4 \cdot \langle x, y \rangle}{4} \\
+&= \langle x, y \rangle \\
+\end{align}
+$$
+
+在现实应用中，常常是在实数域上处理问题的，实内积空间的极化恒等式直接将复数域下的等式虚部归零即可:
+
+设 $V$ 是实内积空间，对于任意 $x, y \in V$ 均有
+$$\langle x, y \rangle = \frac{\lVert x + y \rVert ^2 - \lVert x - y \rVert ^2}{4}$$
