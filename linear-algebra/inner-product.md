@@ -266,3 +266,55 @@ $$
 
 设 $V$ 是实内积空间，对于任意 $x, y \in V$ 均有
 $$\langle x, y \rangle = \frac{\lVert x + y \rVert ^2 - \lVert x - y \rVert ^2}{4}$$
+
+### 算子极化恒等式
+设 $V$ 是复向量内积空间，设存在算子 $T \in \mathcal{L}(V)$ ，那么对于任意两个向量 $x, y \in V$ 都有
+$$\langle Tx, y \rangle =\frac{\langle T(x + y), x + y \rangle - \langle T(x - y), x - y \rangle + i \langle T(x + iy), x + iy \rangle - i \langle T(x - iy), x - iy \rangle}{4}$$
+
+证明：首先，我们将等式右边中的各项展开
+$$
+\begin{align}
+\langle T(x + y), x + y \rangle &= \langle Tx + Ty, x + y \rangle = \langle Tx, x \rangle + \langle Tx, y \rangle + \langle Ty, x \rangle + \langle Ty, y \rangle \\
+\langle T(x - y), x - y \rangle &= \langle Tx - Ty, x - y \rangle = \langle Tx, x \rangle - \langle Tx, y \rangle - \langle Ty, x \rangle + \langle Ty, y \rangle \\
+\langle T(x + iy), x + iy \rangle &= \langle Tx + iTy, x + iy \rangle = \langle Tx, x \rangle - \langle Tx, iy \rangle + i\langle Ty, x \rangle + \langle Ty, y \rangle \\
+\langle T(x - iy), x - iy \rangle &= \langle Tx - iTy, x -i y \rangle = \langle Tx, x \rangle + i\langle Tx, y \rangle - i\langle Ty, x \rangle + \langle Ty, y \rangle \\
+\end{align}
+$$
+
+设 $a_1, a_2, a_3, a_4 \in \mathbf{F}$ ，使得
+$$\langle Tx, y \rangle = a_1 \langle T(x + y), x + y \rangle + a_2 \langle T(x - y), x - y \rangle + a_3 \langle T(x + iy), x + iy \rangle + a_4 \langle T(x - iy), x - iy \rangle$$
+
+那么若是将上式展开，可以得到
+$$
+\begin{align}
+\langle Tx, y \rangle
+&= (a_1 + a_2 + a_3 + a_4) \langle Tx, x \rangle \\
+&+ (a_1 - a_2 - ia_3 + ia_4) \langle Tx, y \rangle \\
+&+ (a_1 - a_2 + ia_3 - ia_4) \langle Ty, x \rangle \\
+&+ (a_1 + a_2 + a_3 + a_4) \langle Ty, y \rangle \\
+\end{align}
+$$
+
+此时我们可以得到方程组：
+$$
+\begin{cases}
+a_1 + a_2 + a_3 + a_4 = 0 \\
+a_1 - a_2 - ia_3 + ia_4 = 1 \\
+a_1 - a_2 + ia_3 - ia_4 = 0 \\
+a_1 + a_2 + a_3 + a_4 = 0 \\
+\end{cases}
+$$
+
+解出方程组即可得到
+$$
+\begin{align}
+a_1 &= \frac{1}{4} \\
+a_2 &= -\frac{1}{4} \\
+a_3 &= \frac{i}{4} \\
+a_4 &= -\frac{i}{4} \\ 
+\end{align}
+$$
+
+将 $a_1 \dots a_4$ 的值代回即可得到算子极化恒等式。
+
+在算子极化恒等式中，如果算子 $T = I$ ，那么就会变为标准的极化恒等式（代入 $Tx = x$ 即可）。

@@ -160,4 +160,28 @@ $$
 ## 自伴算子
 
 ### 定义
+设 $T \in \mathcal{L}(V)$ ，如果 $T = T^*$ ，则称 $T$ 是**自伴**（self-adjoint）的。即 $T$ 对于任意 $v, w \in V$ 都有 $\langle Tv, w \rangle = \langle v, Tw \rangle$ 。
+
+### 相关性质
+1. **自伴算子的本征值都是实数。**
+
+证明：设 $T \in \mathcal{L}(V)$ 且 $T* = T$ ，取 $\lambda \in \mathbf{F}$ 、$v \in V$ 使得 $Tv = \lambda v$ ，那么
+$$\lambda \lVert v \rVert ^2 = \langle \lambda v, v \rangle = \langle Tv, v \rangle = \langle v, T^* v \rangle = \langle v, \lambda v \rangle = \overline{\lambda} \lVert v \rVert ^2$$
+
+所以 $\lambda = \overline{\lambda}$ ，因此 $\lambda \in \mathbf{R}$ 。
+
+2. **设 $V$ 是复内积空间，若 $T \in \mathcal{L}(V)$ 且对于任意 $v \in V$ 都有 $\langle Tv, v \rangle = 0$ ，那么 $T$ 只能是 $0$ 算子，即$T = 0$。**
+
+证明：根据算子极化恒等式可知，对于任意 $u, w \in V$ 都有
+$$
+\begin{align}
+\langle Tu, w \rangle
+&= \frac{\langle T(u + w), u + w \rangle - \langle T(u - w), u - w \rangle}{4} \\
+&+ \frac{i\langle T(u + iw), u + iw \rangle - i\langle T(u - iw), u - iw \rangle}{4} \\
+\end{align}
+$$
+
+因为 $\langle Tv, v \rangle = 0$ ，故而上式中的 $\langle T(u + w), u + w \rangle$ 、$\langle T(u - w), u - w \rangle$ 、$\langle T(u + iw), u + iw \rangle$ 、$\langle T(u - iw), u - iw \rangle$ 都为 $0$ 。
+
+所以对于任意 $u, w \in V$ 都有 $\langle Tu, w \rangle = 0$ , 所以 $T$ 只能为 $0$ 。
 
