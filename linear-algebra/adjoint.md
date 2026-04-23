@@ -185,3 +185,86 @@ $$
 
 所以对于任意 $u, w \in V$ 都有 $\langle Tu, w \rangle = 0$ , 所以 $T$ 只能为 $0$ 。
 
+3. **设 $V$ 是复内积空间，$T \in \mathcal{L}(V)$ 且 $v \in V$，那么 $T$ 是自伴的情况与 $\langle Tv, v \rangle = \mathbf{R}$ 等价成立。**
+
+证明：我们构造以下等式
+$$
+\langle Tv , v \rangle - \overline{\langle Tv , v \rangle} = \langle Tv , v \rangle - \langle v , Tv \rangle = \langle Tv , v \rangle - \langle T^*v , v \rangle =  \langle (T - T^*)v , v \rangle
+$$
+
+当 $T$ 是自伴的情况成立时
+
+$$
+\begin{align}
+\langle (T - T^*)v , v \rangle = \langle (T - T)v , v \rangle &= \langle 0 , v \rangle = 0 \\
+&\Downarrow \\
+\langle Tv , v \rangle - \overline{\langle Tv , v \rangle} &= 0 \\
+&\Downarrow \\
+\langle Tv , v \rangle &= \overline{\langle Tv , v \rangle}
+\end{align}
+$$
+
+显然 $\langle Tv , v \rangle = 0$ 的情况也随之成立。
+
+反之，当 $\langle Tv , v \rangle = 0$ 成立时，显然 $\langle (T - T^*)v , v \rangle = 0$ ，那么此时显然 $T = T^*$ ，即 $T$ 是自伴的情况随之成立。
+
+4. **在内积空间 $V$ 中，若 $T \in \mathcal{L}(V)$ 且对于任意 $v \in V$ 都有 $\langle Tv, v \rangle = 0$，那么 $T = 0$ 。**
+
+在复内积空间中，性质2已经证明过。至于实内积空间，将算子极化恒等式退化到实内积空间的情况下即可证明。
+
+## 正规算子
+
+### 定义
+设有内积空间 $V$ 以及算子 $T \in \mathcal{L}(V)$ ，那么当 $TT^* = T^*T$ 时，则称该算子 $T$ 是**正规的**（normal）。
+
+### 相关性质
+设有内积空间 $V$ 、$T \in \mathcal{L}(V)$ 以及任意 $v \in V$，那么以下性质均成立。
+
+1. **$T$ 是正规的情况与 $\lVert Tv \rVert = \lVert T^*v \rVert$ 等价成立。**
+
+证明：若 $T$ 是正规的，那么 $\langle (T^*T - TT^*)v, v \rangle = 0$ ，因此
+$$
+\begin{align}
+\langle T^*Tv, v \rangle &= \langle TT^*, v \rangle \\
+&\Downarrow \\
+\lVert Tv \rVert ^2 &= \lVert T^*v \rVert ^2 \\
+&\Downarrow \\
+\lVert Tv \rVert &= \lVert T^*v \rVert \\
+\end{align}
+$$
+
+证明完毕，反之，当 $\lVert Tv \rVert = \lVert T^*v \rVert$ 成立时，将上述过程倒转，即可证明 $T$ 时正规的。
+
+2. **若 $T$ 是正规的，那么 $T$ 与 $T^*$ 有相同的本征向量。**
+
+证明：设 $v \in V$ 是 $T$ 相应于本征值 $\lambda \in \mathbf{F}$ 的本征向量，则
+$$
+\begin{align}
+(T - \lambda I)(T - \lambda I)^* = (T - \lambda I)(T^* - \overline{\lambda} I) = TT^* - \overline{\lambda} T - \lambda T^* + \lambda ^2 \\
+(T - \lambda I)^*(T - \lambda I) = (T^* - \overline{\lambda} I)(T - \lambda I) = T^*T - \lambda T^* - \overline{\lambda} T + \lambda ^2
+\end{align}
+$$
+
+因为 $T^*T = TT^*$ ，代入上边的两个等式可得 $(T - \lambda I)(T - \lambda I)^* = (T - \lambda I)^*(T - \lambda I)$ ，因此 $T - \lambda I$ 也是正规的。根据性质1可得
+
+$$
+0 = \lVert (T - \lambda I)v, v \rVert = \lVert (T - \lambda I)^*v, v \rVert = \lVert (T - \overline{\lambda} I)^*v, v \rVert
+$$
+
+因此 $v$ 是相应于 $T^*$ 的本征值 $\overline{\lambda}$ 的本征向量。
+
+3. **若 $T$ 是正规的，且相应于 $T$ 有多个不同的本征值，那么这些本征值所对应的本征向量之间互相正交。**
+
+证明： 设 $\alpha , \beta \in \mathbf{F}$ 是 $T$ 不同的两个本征值，其分别对应的本征向量是 $u , v \in V$ 。那么
+
+$$
+\begin{align}
+(\alpha - \beta)\langle u, v \rangle
+&= \langle (\alpha - \beta) u, v \rangle \\
+&= \langle \alpha u, v \rangle - \langle \beta u, v \rangle \\
+&= \langle Tu, v \rangle - \langle Tu, v \rangle \\
+&= 0 \\
+\end{align}
+$$
+
+因为 $\alpha \neq \beta$ ，所以 $\alpha - \beta \neq 0$ ，最后可知 $\langle u, v \rangle = 0$ ，即向量 $u$ 和 $v$ 正交。
