@@ -86,8 +86,8 @@ $$
 $$
 e_j = 
 \frac
-{v_j - \langle v_j, e_1 \rangle e_1 - \dots - \langle v_j, e_n \rangle e_n}
-{\lVert v_j - \langle v_j, e_1 \rangle e_1 - \dots - \langle v_j, e_n \rangle e_n \rVert}
+{v_j - \langle v_j, e_1 \rangle e_1 - \dots - \langle v_j, e_{j - 1} \rangle e_{j - 1}}
+{\lVert v_j - \langle v_j, e_1 \rangle e_1 - \dots - \langle v_j, e_{j - 1} \rangle e_{j - 1} \rVert}
 $$
 
 则 $e_1, \dots , e_m$ 是 $V$ 中的规范正交组，使得对 $1 \leq j \leq m$ 有
@@ -95,7 +95,7 @@ $$\text{span}(v_1, \dots , v_j) = \text{span}(e_1, \dots , e_j)$$
 
 **证明：**
 
-首先对于 $j = 1$ 的情况，显然 $e_1$ 是 $v_1$ 的正数倍，那么 $$\text{span}(v_1) = \text{span}(e_1)$$ 自然成立。
+首先对于 $j = 1$ 的情况，显然 $e_1$ 是 $v_1$ 的正数倍，那么 $\text{span}(v_1) = \text{span}(e_1)$ 自然成立。
 
 我们先设 $1 < j <m$ 的情况下成立
 $$\text{span}(v_1, \dots, v_j) = \text{span}(e_1, \dots ,e_j)$$
