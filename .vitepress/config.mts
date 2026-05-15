@@ -49,7 +49,8 @@ export default defineConfig({
             { text: '规范正交基', link: '/linear-algebra/orthonormal' },
             { text: '正交补', link: '/linear-algebra/orthogonal-complement' },
             { text: '自伴算子与正规算子', link: '/linear-algebra/adjoint' },
-            { text: '谱定理', link: '/linear-algebra/spectral' }
+            { text: '谱定理', link: '/linear-algebra/spectral' },
+            { text: '正算子', link: '/linear-algebra/positive-operator' }
           ]
         }
       ],
