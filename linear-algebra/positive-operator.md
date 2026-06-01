@@ -45,7 +45,7 @@ $$\langle Tv, v \rangle = \langle R^*Rv, v \rangle = \langle Rv, (R^*)^*v \rangl
 至此已经证明条件1至5循环蕴含，故而这5个条件等价成立。
 
 ## 正算子的正平方根唯一
-对于任意正算子 $T$ ，有且只有一个平方根是正算子。
+**对于任意正算子 $T$ ，有且只有一个平方根是正算子，这个唯一的正算子记作 $\sqrt{T}$ 。**
 
 证明：
 设 $T \in \mathcal{L}(V)$ 是正算子，$v \in V$ 是 $T$ 的一个本征向量，其对应的本征值为 $\lambda$ ，那么可知 $\lambda \geq 0$ 且 $Tv = \lambda v$ 。
