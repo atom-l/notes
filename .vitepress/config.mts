@@ -52,7 +52,8 @@ export default defineConfig({
             { text: '谱定理', link: '/linear-algebra/spectral' },
             { text: '正算子', link: '/linear-algebra/positive-operator' },
             { text: '等距同构', link: '/linear-algebra/isometry' },
-            { text: '极分解', link: '/linear-algebra/polar-decomposition' }
+            { text: '极分解', link: '/linear-algebra/polar-decomposition' },
+            { text: '奇异值', link: '/linear-algebra/singular-value' }
           ]
         }
       ],
