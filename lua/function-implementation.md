@@ -342,7 +342,7 @@ printer() -- 调用内部闭包，输出 x 的值，此时 x 和 closure 是共�
     <img src="/function-impl-5.png">
 </center>
 
-当闭包 outer 还没调用结束时，其局部变量 x 需要从栈空间上释放，这时会将值 x 拷贝到`UpVal.u.value`中，其引用栈的指针也改为指向自身的value，最后还需要将其从`lua_State.openupval`链表中移出，如下图所示：
+当闭包 outer 调用结束时，其局部变量 x 需要从栈空间上释放，这时会将值 x 拷贝到`UpVal.u.value`中，其引用栈的指针也改为指向自身的value，最后还需要将其从`lua_State.openupval`链表中移出，如下图所示：
 
 <center>
     <img src="/function-impl-6.png">
